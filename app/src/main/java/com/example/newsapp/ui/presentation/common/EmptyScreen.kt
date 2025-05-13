@@ -60,7 +60,6 @@ fun EmptyScreen(error: LoadState.Error? = null) {
     LaunchedEffect(key1 = true) {
         startAnimation = true
     }
-
     EmptyContent(alphaAnim = alphaAnimation, message = message, iconId = icon)
 
 }
@@ -74,7 +73,7 @@ fun EmptyContent(alphaAnim: Float, message: String, iconId: Int) {
     ) {
         Icon(
             painter = painterResource(id = iconId),
-            contentDescription = null,
+            contentDescription = "No Internet connection, please turn on wifi and relaunch the app",
             tint = if (isSystemInDarkTheme()) LightGray else DarkGray,
             modifier = Modifier
                 .size(120.dp)

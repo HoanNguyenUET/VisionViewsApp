@@ -10,5 +10,6 @@ sealed class Route(
     object AppStartNavigation: Route(route = "app start navigation")
     object NewsNavigation: Route(route = "news navigation")
     object NewsNavigatorScreen: Route(route = "news navigation screen")
+    object BlankScreenNavigation: Route(route = "blank screen navigation")
     object BlankScreen: Route(route = "blank screen")
 }

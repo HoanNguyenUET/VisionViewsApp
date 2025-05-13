@@ -29,7 +29,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun OnBoardingScreen(
-    event: (OnBoardingEvent) -> Unit
+    event: (OnBoardingEvent) -> Unit,
+    openAppSettings: () -> Unit
 ) {
 
     val pagerState = rememberPagerState(initialPage = 0) {
@@ -63,7 +64,7 @@ fun OnBoardingScreen(
             OnboardingPage(
                 page = pages[index],
                 isNotificationPage = index == 2,
-                onClick = {}
+                onClick = openAppSettings
             )
         }
         Row(
@@ -91,6 +92,7 @@ fun OnBoardingScreen(
                         }
                     }
                 },
+                contentDescription = if(pagerState.currentPage == 0 || pagerState.currentPage == 1) "Go to next screen" else "Let's go to the latest News",
                 imageVector = buttonState.value
             )
         }

@@ -2,13 +2,18 @@ package com.example.newsapp.ui.presentation.news_navigator.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -24,6 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.newsapp.R
@@ -34,34 +44,68 @@ fun NewsBottomNavigation(
     selectedItem: Int,
     onItemClick: (Int) -> Unit
 ) {
-    NavigationBar(
-        modifier = Modifier.fillMaxWidth(),
-        containerColor = MaterialTheme.colorScheme.background,
-        tonalElevation = 12.dp
-    ) {
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                selected = index == selectedItem,
-                onClick = { onItemClick(index) },
-                icon = {
-                    Column(horizontalAlignment = CenterHorizontally) {
-                        Icon(
-                            painter = painterResource(id = item.icon),
-                            contentDescription = null,
-                            modifier = Modifier.size(48.dp),
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = item.text, style = MaterialTheme.typography.labelSmall)
-                    }
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.primary,
-                    selectedTextColor = MaterialTheme.colorScheme.primary,
-                    unselectedIconColor = colorResource(id = R.color.body),
-                    unselectedTextColor = colorResource(id = R.color.body),
-                    indicatorColor = MaterialTheme.colorScheme.background
-                ),
-            )
+    Column {
+        HorizontalDivider(
+            thickness = 2.dp,
+            color = Color.Gray
+        )
+
+        NavigationBar(
+            modifier = Modifier.fillMaxWidth(),
+            containerColor = Color.White
+        ) {
+            items.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    selected = index == selectedItem,
+                    onClick = {onItemClick(index)},
+                    icon = {
+                        Column(
+                            horizontalAlignment = CenterHorizontally,
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .then(
+                                    if (index == selectedItem) Modifier
+                                        .border(
+                                            width = 4.dp,
+                                            color = colorResource(id = R.color.blue),
+                                            shape = RoundedCornerShape(12.dp)
+                                        )
+                                        .padding(8.dp) // inner padding inside border
+                                    else Modifier
+                                )
+                                .clearAndSetSemantics { },
+                        ) {
+                            Icon(
+                                painter = painterResource(id = item.icon),
+                                contentDescription = null,
+                                modifier = Modifier.size(32.dp),
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = item.text,
+                                style = MaterialTheme.typography.bodyLarge.copy(
+                                    fontWeight = FontWeight.SemiBold
+                                ),
+                                modifier = Modifier.semantics {contentDescription = ""}
+                            )
+                        }
+                    },
+                    modifier = Modifier.semantics(mergeDescendants = true) {
+                        stateDescription = if (index == selectedItem) {
+                            "You’re at ${item.text} screen"
+                        } else {
+                            "Double tap to move to ${item.text} screen"
+                        }
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = colorResource(id = R.color.blue),
+                        selectedTextColor = colorResource(id = R.color.blue),
+                        unselectedIconColor = colorResource(id = R.color.body),
+                        unselectedTextColor = colorResource(id = R.color.body),
+                        indicatorColor = MaterialTheme.colorScheme.background
+                    ),
+                )
+            }
         }
     }
 }

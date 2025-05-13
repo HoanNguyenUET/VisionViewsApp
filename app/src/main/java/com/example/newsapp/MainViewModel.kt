@@ -33,7 +33,7 @@ class MainViewModel(
 //        )
 
 
-    private val _startDestination = mutableStateOf(Route.AppStartNavigation.route)
+    private val _startDestination = mutableStateOf(Route.BlankScreenNavigation.route)
     val startDestination: State<String> = _startDestination
 
     init {

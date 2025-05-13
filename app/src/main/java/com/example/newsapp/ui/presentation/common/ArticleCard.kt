@@ -1,5 +1,7 @@
 package com.example.newsapp.ui.presentation.common
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +27,9 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +39,9 @@ import coil.request.ImageRequest
 import com.example.newsapp.R
 import com.example.newsapp.domain.model.Article
 import com.example.newsapp.domain.model.Source
+import com.example.newsapp.ultils.TimeConverter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ArticleCard(
     modifier: Modifier = Modifier,
@@ -46,7 +53,8 @@ fun ArticleCard(
     Card(
         modifier = Modifier
             .clickable(
-                onClick = onClick
+                onClick = onClick,
+                onClickLabel = "Read the full content of this article"
             ),
         shape = RectangleShape,
         colors = CardDefaults.cardColors(Color.White)
@@ -72,6 +80,19 @@ fun ArticleCard(
                     color = Color.Black,
                     fontWeight = FontWeight.ExtraBold
                 ),
+                modifier = Modifier.semantics{
+                    contentDescription = "Article heading ${article.title}"
+                }
+            )
+
+            Text(
+                text = article.description,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = Color.Black
+                ),
+                modifier = Modifier.semantics{
+                    contentDescription = "Short description of the article ${article.description}"
+                }
             )
 
             Row(
@@ -83,6 +104,10 @@ fun ArticleCard(
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = Color.Black
                     )
+                    ,
+                    modifier = Modifier.semantics{
+                        contentDescription = "From ${article.source.name}"
+                    }
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -97,10 +122,13 @@ fun ArticleCard(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    text = article.publishedAt,
+                    text = TimeConverter.formatIsoTime(article.publishedAt),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = Color.Gray
-                    )
+                    ),
+                    modifier = Modifier.semantics{
+                        contentDescription = "Published at" + TimeConverter.formatIsoTime(article.publishedAt)
+                    }
                 )
             }
 
@@ -108,26 +136,8 @@ fun ArticleCard(
 
             HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(0.9f),
-                thickness = 2.dp
+                thickness = 4.dp
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ArticleCardPreview() {
-        ArticleCard(
-            article = Article(
-                author = "",
-                content = "",
-                description = "",
-                publishedAt = "2 hours",
-                source = Source(id = "", name = "BBC"),
-                title = "Her train broke down, Her phone dies. And then she met her saver in an alley",
-                url = "",
-                urlToImage = ""
-            )
-        ) { }
-
 }

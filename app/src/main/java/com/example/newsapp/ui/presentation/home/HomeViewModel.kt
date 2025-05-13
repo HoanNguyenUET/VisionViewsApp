@@ -15,7 +15,7 @@ class HomeViewModel(
 ): ViewModel() {
 
     val news = newsUseCases.getNews(
-        sources = listOf("bbc-news", "abc-news")
+        sources = listOf("bbc-news", "abc-news", "bloomberg")
     ).cachedIn(viewModelScope)
 
     companion object {

@@ -1,6 +1,9 @@
 package com.example.newsapp.ui.presentation.home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
@@ -18,10 +22,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -32,6 +41,7 @@ import com.example.newsapp.ui.presentation.common.ArticlesList
 import com.example.newsapp.ui.presentation.navigation.Route
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
@@ -54,31 +64,41 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 16.dp)
-            .statusBarsPadding()
+            .padding(top = 4.dp)
+            .statusBarsPadding(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "VISION NEWS",
-            style = MaterialTheme.typography.displayMedium.copy(
-                color = Color.Blue
-            )
+            text = "News Talking",
+            style = MaterialTheme.typography.displaySmall.copy(
+                color = colorResource(R.color.blue),
+                fontWeight = FontWeight.ExtraBold
+            ),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth().semantics{
+                contentDescription = "Welcome to News Talking"
+            }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = titles,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp)
-                .basicMarquee(), fontSize = 12.sp,
+                .padding(start = 2.dp)
+                .basicMarquee()
+                .semantics{
+                    contentDescription = "Latest News: $titles"
+                }, fontSize = 24.sp,
             color = colorResource(id = R.color.placeholder)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
+        HorizontalDivider(modifier = Modifier.fillMaxWidth(0.95f), color = Color.Gray, thickness = 2.dp)
 
         ArticlesList(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().background(color = Color.White),
             articles = articles,
             onClick = navigate
         )

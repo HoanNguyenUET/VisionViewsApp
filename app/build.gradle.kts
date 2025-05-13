@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.newsapp"
-        minSdk = 24
+        minSdk = 33
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -65,6 +65,7 @@ dependencies {
 
     //Accompanist
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.31.4-beta")
+    implementation("com.google.accompanist:accompanist-permissions:0.37.2")
 
     //Paging 3
     implementation ("androidx.paging:paging-runtime: 3.3.6")

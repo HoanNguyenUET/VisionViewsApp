@@ -28,7 +28,7 @@ fun NewsButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White
         ),
-        shape = RoundedCornerShape(size = 6.dp)
+        shape = RoundedCornerShape(size = 6.dp),
     ) {
         Text(
             text = text,
@@ -42,6 +42,7 @@ fun NewsButton(
 @Composable
 fun NewsIconButton(
     imageVector: ImageVector,
+    contentDescription: String,
     onClick: () -> Unit
 ) {
     IconButton(
@@ -51,7 +52,7 @@ fun NewsIconButton(
         Icon(
             modifier = Modifier.size(48.dp),
             imageVector = imageVector,
-            contentDescription = null,
+            contentDescription = contentDescription,
             tint = Color.White
         )
     }
