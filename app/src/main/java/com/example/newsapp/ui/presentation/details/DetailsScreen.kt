@@ -2,8 +2,6 @@ package com.example.newsapp.ui.presentation.details
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -21,12 +19,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.newsapp.R
 import com.example.newsapp.domain.model.Article
-import com.example.newsapp.domain.model.Source
 import com.example.newsapp.ui.presentation.details.components.DetailsTopBar
 import androidx.core.net.toUri
 
