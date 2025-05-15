@@ -38,6 +38,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.example.newsapp.R
 import com.example.newsapp.domain.model.Article
 import com.example.newsapp.ui.presentation.common.ArticlesList
+import com.example.newsapp.ui.presentation.common.NewsArticlesList
 import com.example.newsapp.ui.presentation.navigation.Route
 
 
@@ -60,6 +61,8 @@ fun HomeScreen(
             }
         }
     }
+
+    val newsArticle = News.newsArticle
 
     Column(
         modifier = Modifier
@@ -97,9 +100,10 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider(modifier = Modifier.fillMaxWidth(0.95f), color = Color.Gray, thickness = 2.dp)
 
-        ArticlesList(
+        NewsArticlesList(
             modifier = Modifier.fillMaxWidth().background(color = Color.White),
             articles = articles,
+            newsArticles = newsArticle,
             onClick = navigate
         )
     }

@@ -42,9 +42,10 @@ fun ArticlesList(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ArticlesList(
+fun NewsArticlesList(
     modifier: Modifier = Modifier,
     articles: LazyPagingItems<Article>,
+    newsArticles: List<Article>,
     onClick:(Article) -> Unit
 ) {
 
@@ -56,6 +57,12 @@ fun ArticlesList(
             verticalArrangement = Arrangement.spacedBy(32.dp),
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
+            items(
+                count = newsArticles.size
+            ) {
+                val article = newsArticles[it]
+                ArticleCard(article = article, onClick = {onClick(article)})
+            }
             items(
                 count = articles.itemCount,
             ) {
